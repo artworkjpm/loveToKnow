@@ -1,12 +1,15 @@
 /* A.txt - 111
 B.txt - 39
 C.txt - 12 */
+
 const startFile = "A.txt";
 var fs = require("fs");
 let files = [];
 let sum = [];
 let printArray = [];
 const allLines = (data) => {
+	sum = [];
+	files = [];
 	let arr = data.split(/\r\n|\n/);
 	arr.forEach((line) => {
 		if (line.includes(".txt")) {
@@ -17,7 +20,7 @@ const allLines = (data) => {
 	});
 };
 
-let getFileData = (fileName) => {
+const getFileData = (fileName) => {
 	let nameFile = fs.readFileSync(fileName, "utf8");
 	allLines(nameFile);
 };
@@ -41,8 +44,13 @@ function finalPrintOut(arrayLooper) {
 
 /* console.log(sum);
 console.log(printArray); */
-/* console.log(files); */
 /* console.log(sum); */
 /* var obj = [{ 1: [10, 10] }, { 2: [10, 10] }]; */
-/* files.forEach((item) => {}); */
-finalPrintOut(printArray);
+/* finalPrintOut(printArray); */
+
+console.log(files);
+files.forEach((item) => {
+	getFileData(item);
+	console.log(sum);
+	finalPrintOut(printArray);
+});
