@@ -1,4 +1,4 @@
-const fileNameStarter = "A.txtx";
+const fileNameStarter = "A.txt";
 var fs = require("fs");
 let resultState;
 
