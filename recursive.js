@@ -1,15 +1,16 @@
+const fileNameStarter = "A.txtx";
 var fs = require("fs");
 let resultState;
 
 function processFile(filename) {
+	let nameFile = fs.readFileSync(filename, "utf8");
+	let arr = nameFile.split(/\r\n|\n/);
 	let results = {
 		filename: filename,
 		total: 0,
 		subFiles: [],
 	};
 
-	let nameFile = fs.readFileSync(filename, "utf8");
-	let arr = nameFile.split(/\r\n|\n/);
 	arr.forEach((line) => {
 		if (!line.includes(".txt")) {
 			results.total += Number(line);
@@ -28,9 +29,8 @@ function formatResults(res) {
 	});
 }
 
-processFile("A.txt");
+processFile(fileNameStarter);
 
 if (resultState) {
-	/* console.log(resultState); */
 	formatResults(resultState);
 }
