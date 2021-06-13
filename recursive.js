@@ -1,25 +1,44 @@
-const fileNameStarter = "A.txt";
+const fileToProcess = "A.txtx";
 var fs = require("fs");
 let resultState;
+let storeNameFile = [];
+
+function checkIfDuplicateExists(arr) {
+	return new Set(arr).size !== arr.length;
+}
 
 function processFile(filename) {
-	let nameFile = fs.readFileSync(filename, "utf8");
-	let arr = nameFile.split(/\r\n|\n/);
-	let results = {
-		filename: filename,
-		total: 0,
-		subFiles: [],
-	};
+	//save filename to stop infinite loops
+	storeNameFile.push(filename);
+	//check filename has not already been passed in as a subfile
 
-	arr.forEach((line) => {
-		if (!line.includes(".txt")) {
-			results.total += Number(line);
-		} else {
-			let subFileResults = processFile(line);
-			results.subFiles.push(subFileResults);
+	if (!checkIfDuplicateExists(storeNameFile)) {
+		// try check to print out err.message if file name is wrong
+		try {
+			let nameFile = fs.readFileSync(filename, "utf8");
+			let arr = nameFile.split(/\r\n|\n/);
+			let results = {
+				filename: filename,
+				total: 0,
+				subFiles: [],
+			};
+
+			arr.forEach((line) => {
+				if (!line.includes(".txt")) {
+					results.total += Number(line);
+				} else {
+					let subFileResults = processFile(line);
+					results.subFiles.push(subFileResults);
+				}
+			});
+
+			return (resultState = results);
+		} catch (err) {
+			console.error(err.message);
 		}
-	});
-	return (resultState = results);
+	} else {
+		console.error("You have an infinite loop, check you haven't passed in the first file in another file");
+	}
 }
 
 function formatResults(res) {
@@ -29,7 +48,7 @@ function formatResults(res) {
 	});
 }
 
-processFile(fileNameStarter);
+processFile(fileToProcess);
 
 if (resultState) {
 	formatResults(resultState);
