@@ -10,8 +10,7 @@ function checkIfDuplicateExists(arr) {
 function processFile(filename) {
 	//save filename to stop infinite loops
 	storeNameFile.push(filename);
-	//check filename has not already been passed in as a subfile
-
+	//check filename has not already been passed in as a subfile, eg A.txt is not inside D.txt
 	if (!checkIfDuplicateExists(storeNameFile)) {
 		// try check to print out err.message if file name is wrong
 		try {
