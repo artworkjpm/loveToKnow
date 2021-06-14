@@ -1,4 +1,4 @@
-const fileToProcess = "A.txtx";
+const fileToProcess = "A.txt";
 var fs = require("fs");
 let resultState;
 let storeNameFile = [];
@@ -10,9 +10,9 @@ function checkIfDuplicateExists(arr) {
 function processFile(filename) {
 	//save filename to stop infinite loops
 	storeNameFile.push(filename);
-	//check filename has not already been passed in as a subfile, eg A.txt is not inside D.txt
+	//check filename has not already been passed in as a subfile, eg A.txt is not inside B.txt
 	if (!checkIfDuplicateExists(storeNameFile)) {
-		// try check to print out err.message if file name is wrong
+		// try check to print out err.message if fileToProcess name is wrong
 		try {
 			let nameFile = fs.readFileSync(filename, "utf8");
 			let arr = nameFile.split(/\r\n|\n/);
@@ -36,7 +36,7 @@ function processFile(filename) {
 			console.error(err.message);
 		}
 	} else {
-		console.error("You have an infinite loop, check you haven't passed in the first file in another file");
+		console.error("You have an infinite loop, check you haven't passed in the first file in another file,  eg A.txt is not inside B.txt");
 	}
 }
 
